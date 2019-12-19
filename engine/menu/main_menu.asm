@@ -172,11 +172,20 @@ SpecialEnterMap:
 	jp EnterMap
 
 ContinueText:
+IF DEF(LOC_CS)
+	db "POKRACOVAT", $4e
+ELSE
 	db "CONTINUE", $4e
+ENDC
 
 NewGameText:
+IF DEF(LOC_CS)
+	db "NOVA HRA", $4e
+	db "MOZNOSTI@"
+ELSE
 	db "NEW GAME", $4e
 	db "OPTION@"
+ENDC
 
 DisplayContinueGameInfo:
 	xor a
@@ -257,10 +266,17 @@ PrintPlayTime:
 	jp PrintNumber
 
 SaveScreenInfoText:
+IF DEF(LOC_CS)
+	db   "HRAC"
+	next "ODZNAKY   "
+	next "#DEX    "
+	next "CAS @"
+ELSE
 	db   "PLAYER"
 	next "BADGES    "
 	next "#DEX    "
 	next "TIME@"
+ENDC
 
 DisplayOptionMenu:
 	callab DisplayOptionMenu_

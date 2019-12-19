@@ -1,10 +1,13 @@
 PYTHON := python
 pcm      := $(PYTHON) tools/pokemontools/pcm.py pcm
 
-rom := pokeyellow.gbc
+roms := pokeyellow.gbc pokeyellow_cs.gbc
+rom_orig := pokeyellow.gbc
+rom_cs := pokeyellow.gbc pokeyellow_cs.gbc
 
-objs := audio.o main.o text.o wram.o
-
+objs_common := audio.o wram.o
+objs_orig := main.o text.o
+objs_cs := main_cs.o text_cs.o
 
 ### Build tools
 
@@ -24,21 +27,22 @@ RGBLINK ?= $(RGBDS)rgblink
 .SECONDARY:
 .PHONY: all clean yellow tidy compare tools
 
-all: $(rom)
-yellow: $(rom)
+all: $(roms)
+yellow: pokeyellow.gbc
+cs: pokeyellow_cs.gbc
 
 # For contributors to make sure a change didn't affect the contents of the rom.
-compare: $(rom)
+compare: $(roms)
 	@$(MD5) roms.md5
 
 clean:
-	rm -f $(rom) $(objs) $(rom:.gbc=.sym)
+	rm -f $(roms) $(objs_common) $(objs_orig) $(objs_cs) $(roms:.gbc=.sym)
 	find . \( -iname '*.1bpp' -o -iname '*.2bpp' -o -iname '*.pic' -o -iname '*.pcm' \) -exec rm {} +
 	$(MAKE) clean -C tools/
 	
 
 tidy:
-	rm -f $(rom) $(objs) $(rom:.gbc=.sym)
+	rm -f $(roms) $(objs_common) $(objs_orig) $(objs_cs) $(roms:.gbc=.sym)
 	$(MAKE) clean -C tools/
 
 tools:
@@ -53,16 +57,28 @@ endif
 %.asm: ;
 
 %.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
-$(objs): %.o: %.asm $$(dep)
+$(objs_common): %.o: %.asm $$(dep)
+	$(RGBASM) -h -o $@ $*.asm
+$(objs_orig): %.o: %.asm $$(dep)
 	$(RGBASM) -h -o $@ $*.asm
 
-opts = -cjsv -k 01 -l 0x33 -m 0x1b -p 0 -r 03 -t "POKEMON YELLOW"
+%_cs.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
+$(objs_cs): %_cs.o: %.asm $$(dep)
+	$(RGBASM) -D LOC_CS -h -o $@ $*.asm
 
-$(rom): $(objs)
+opts = -cjsv -k 01 -l 0x33 -m 0x1b -p 0 -r 03 -t "POKEMON YELLOW"
+opts_cs = -cjsv -k 01 -l 0x33 -m 0x1b -p 0 -r 03 -t "PKMN YELLOW CS"
+
+pokeyellow.gbc: $(objs_orig) $(objs_common)
 		$(RGBLINK) -n pokeyellow.sym -l pokeyellow.link -o $@ $^
 		$(RGBFIX) $(opts) $@
-		sort $(rom:.gbc=.sym) -o $(rom:.gbc=.sym)
-	
+		sort $(rom_orig:.gbc=.sym) -o $(rom_orig:.gbc=.sym)
+
+pokeyellow_cs.gbc: $(objs_cs) $(objs_common)
+		$(RGBLINK) -n pokeyellow_cs.sym -l pokeyellow.link -o $@ $^
+		$(RGBFIX) $(opts_cs) $@
+		sort $(rom_cs:.gbc=.sym) -o $(rom_cs:.gbc=.sym)
+
 ### Misc file-specific graphics rules
 
 gfx/game_boy.2bpp: tools/gfx += --remove-duplicates

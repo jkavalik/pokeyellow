@@ -90,11 +90,23 @@ TextSpeedStringsPointerTable:
 	dw SlowText
 
 FastText:
+IF DEF(LOC_CS)
+	db "RYCHLE@"
+ELSE
 	db "FAST@"
+ENDC
 MidText:
+IF DEF(LOC_CS)
+	db "STRED @"
+ELSE
 	db "MID @"
+ENDC
 SlowText:
+IF DEF(LOC_CS)
+	db "POMALU@"
+ELSE
 	db "SLOW@"
+ENDC
 
 Func_41d07:
 	ld a, [wOptions]
@@ -147,9 +159,17 @@ AnimationOptionStringsPointerTable:
 	dw AnimationOffText
 
 AnimationOnText:
+IF DEF(LOC_CS)
+	db "ZAP@"
+ELSE
 	db "ON @"
+ENDC
 AnimationOffText:
+IF DEF(LOC_CS)
+	db "VYP@"
+ELSE
 	db "OFF@"
+ENDC
 
 OptionsMenu_BattleStyle:
 	ld a, [hJoy5]
@@ -433,11 +453,23 @@ Func_41f06:
 	ret
 
 AllOptionsText:
+IF DEF(LOC_CS)
+	db "TEXT:"
+	next "ANIMACE:"
+	next "BITVY:"
+	next "ZVUK:"
+	next "TISK:@"
+ELSE
 	db "TEXT SPEED :"
 	next "ANIMATION  :"
 	next "BATTLESTYLE:"
 	next "SOUND:"
 	next "PRINT:@"
+ENDC
 
 OptionMenuCancelText:
+IF DEF(LOC_CS)
+	db "ZPET@"
+ELSE
 	db "CANCEL@"
+ENDC
