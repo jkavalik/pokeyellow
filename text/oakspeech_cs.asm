@@ -15,41 +15,41 @@ _OakSpeechText2A::
 	cont "#MONi!@@"
 
 _OakSpeechText2B::
-	text $51,"For some people,"
-	line "#MON are"
-	cont "pets. Others use"
-	cont "them for fights."
+	text $51,"Pro nekoho,"
+	line "#MONi jsou"
+	cont "mazlicci. Jini"
+	cont "s nimi zapasi."
 
-	para "Myself..."
+	para "A ja..."
 
-	para "I study #MON"
-	line "as a profession."
+	para "Studuji #MONy"
+	line "profesionalne."
 	prompt
 
 _IntroducePlayerText::
-	text "First, what is"
-	line "your name?"
+	text "a jak se"
+	line "jmenujes ty?"
 	prompt
 
 _IntroduceRivalText::
-	text "This is my grand-"
-	line "son. He's been"
-	cont "your rival since"
-	cont "you were a baby."
+	text "Tohle je muj"
+	line "vnuk. Souperili"
+	cont "jste spolu"
+	cont "uz od mala."
 
-	para "...Erm, what is"
-	line "his name again?"
+	para "...Ehm, jak ze"
+	line "se jmenuje on?"
 	prompt
 
 _OakSpeechText3::
 	text $52,"!"
 
-	para "Your very own"
-	line "#MON legend is"
-	cont "about to unfold!"
+	para "Tva vlastni"
+	line "#MONova"
+	cont "legenda zacina!"
 
-	para "A world of dreams"
-	line "and adventures"
-	cont "with #MON"
-	cont "awaits! Let's go!"
+	para "Svet snu"
+	line "a dobrodruzstvi"
+	cont "s #MONy ceka!"
+	cont "Do toho!"
 	done
