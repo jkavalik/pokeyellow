@@ -1,3 +1,12 @@
+# A localizable version of [**Pokémon Yellow**][pokeyellow] disassembly
+## Working branch of a Czech localization
+
+* Makefile and some structures modified to allow building multiple images for different languages
+* Each new language requires makefile modifications and some elif through the code (as some texts are spread accross multiple files - menu, options etc.)
+* The original image output still matches the original (can be checked with `make compare`), md5 of new image(s) is not checked as the translation is still a work-in-progress
+
+## Original README of [**Pokémon Yellow**][pokeyellow]
+
 # Pokémon Yellow
 
 This is a disassembly of Pokémon Yellow.
@@ -22,6 +31,7 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
 * Discord: [**pret**][Discord]
 * irc: **irc.freenode.net** [**#pret**][irc]
 
+[pokeyellow]: https://github.com/pret/pokeyellow
 [pokered]: https://github.com/pret/pokered
 [pokegold]: https://github.com/pret/pokegold
 [pokecrystal]: https://github.com/pret/pokecrystal
